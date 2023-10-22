@@ -1,0 +1,21 @@
+{
+	"name": "Deploy",
+	"on": {
+		"push": {
+			"branches": [
+				"master"
+			]
+		}
+	},
+	"jobs": {
+		"rojo build": {
+			"runs-on": "ubuntu-latest",
+			"steps": [
+				{ "uses": "actions/checkout@v3" },
+				{ "uses": "Roblox/setup-foreman@v2", "with": {"token": "${{ secrets.GITHUB_TOKEN }}"} },
+				{ "run": "rojo build export.project.json --output out.rbxm" },
+				{ "uses": "actions/upload-artifact@v3", "with": {"name": "Build", "path": "out.rbxm"} }
+			]
+		}
+	}
+}

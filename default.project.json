@@ -1,0 +1,10 @@
+{
+	"name": "Test",
+	"emitLegacyScripts": false,
+	"tree": {
+		"$className": "DataModel",
+		"ServerScriptService": {
+			"$path": "src"
+		}
+	}
+}

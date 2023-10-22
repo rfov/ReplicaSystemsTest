@@ -1,0 +1,14 @@
+{
+	"name": "Analyze",
+	"on": [ "push" ],
+	"jobs": {
+		"luau-analyze": {
+			"runs-on": "ubuntu-latest",
+			"steps": [
+				{ "uses": "actions/checkout@v3" },
+				{ "run": "wget $(curl https://api.github.com/repos/Roblox/Luau/releases | jq --raw-output '[.[] | select(.prerelease | not) | .assets[] | select(.name == \"luau-ubuntu.zip\")] | first | .browser_download_url') && unzip luau-ubuntu.zip" },
+				{ "run": "./luau-analyze --formatter=gnu . 2>&1 | sed --regexp-extended 's/(.+):([0-9]+)\.([0-9]+)-([0-9]+)\.([0-9]+): (.+): (.*)/::warning file=\1,line=\2,col=\3,endLine=\4,endColumn=\5,title=\6::\7/'" }
+			]
+		}
+	}
+}
